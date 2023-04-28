@@ -1,0 +1,25 @@
+
+<div>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a href="">
+      <img src="../../assets/images/logo-indeed.png" alt="">
+    </a>
+  
+    <div class="container-fluid">
+      <ul class="navbar-nav mr-auto d-inline-block">
+        <li *ngFor="let link of linkRight" class="nav-item d-inline-block ml-2" [ngClass]="{ 'active':isActive(link) }" (click)="selected(link)">
+          <a [ngClass]="{ 'active':isActive(link), 'simple':!isActive(link), 'nav-link' : isntNavLink(link)}">{{link}}</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto d-inline-block">
+        <li *ngFor="let link of linkLeft" class="nav-item d-inline-block ml-2" [ngClass]="{ 'active':isActive(link) }" (click)="selected(link)">
+          <a [ngClass]="{ 'active':isActive(link), 'simple':!isActive(link), 'nav-link' : isntNavLink(link)}">{{link}}</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+</div>
+

@@ -1,0 +1,46 @@
+<div class="card sticky-top">
+
+    <div class="bloc-head">
+        <div class="head">
+            <h5>{{publication.titre}}</h5>
+            <p>{{publication.entrepriseName}} <i *ngFor="let i of rangeStar" class="fa fa-star" aria-hidden="true"></i><i *ngIf="haveHalfStar" class="fa fa-star-half-o" aria-hidden="true"></i><i *ngFor="let i of rangeHiddenStar()" class="fa fa-star-o" aria-hidden="true"></i></p>
+            <p>{{publication.emplacement}}</p>
+            <p><span *ngFor="let type of publication.typeId">{{getNameType(type)}} <span *ngIf="publication.typeId.indexOf(type)!=publication.typeId.length-1">, </span> </span> <span *ngIf="publication.salaire"> <span *ngIf="publication.typeId"> - </span>{{publication.salaire}}</span></p>
+
+            <div>
+                <button type="button" class="btn btn-primary"><span *ngIf="publication.haveHerSite">Continuer pour postuler</span><span *ngIf="!publication.haveHerSite">Postuler sur Indeed</span></button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="description">
+        <div class="overflow-auto" >
+            <h4>Détails du poste</h4>
+            <br>
+
+            <div *ngIf="publication.salaire">
+                <h6><i class="fa fa-money" aria-hidden="true"></i> Salaire</h6>
+                <span class="badge badge-info mr-1 ml-1"> {{publication.salaire}} </span>
+            </div>
+
+            <div *ngIf="publication.typeId && publication.typeId.length>0">
+                <h6><i class="fa fa-briefcase" aria-hidden="true"></i>  Type de poste</h6>
+                <span *ngFor="let type of publication.typeId" class="badge badge-info mr-1 ml-1"> {{getNameType(type)}} </span>
+            </div>
+    
+            <div *ngIf="publication.horaire_roulementId && publication.horaire_roulementId.length>0">
+                <h6><i class="fa fa-clock-o" aria-hidden="true"></i>  Horaires et roulements</h6>
+                <span *ngFor="let horaire_roulement of publication.horaire_roulementId" class="badge badge-info mr-1 ml-1"> {{getNameHr(horaire_roulement)}} </span>
+            </div>
+            <hr>
+            <p>{{publication.description}}</p>
+            <div>
+                <button type="button" class="btn btn-light"><i class="fa fa-flag" aria-hidden="true"></i> Signaler l'offre</button> 
+            </div>
+        </div>
+    </div>
+    
+
+    
+    
+</div>

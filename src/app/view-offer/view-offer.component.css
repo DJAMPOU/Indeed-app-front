@@ -1,0 +1,34 @@
+.card{
+    margin-top: 15px;
+}
+.head{
+    padding: 10px;
+}
+.bloc-head{
+    box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.5);
+}
+.description{
+    padding: 10px;
+}
+.overflow-auto{
+    height: 500px;
+    overflow-y: auto;
+}
+
+/* Styles pour la barre de défilement */
+::-webkit-scrollbar {
+    width: 8px; /* largeur de la barre de défilement */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* couleur de fond de la barre de défilement */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #888; /* couleur de la poignée de la barre de défilement */
+    border-radius: 5px; /* rayon de la poignée de la barre de défilement */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* couleur de la poignée de la barre de défilement au survol */
+  }

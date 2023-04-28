@@ -1,0 +1,64 @@
+
+<div class="container mt-5">
+    <form>
+        <div class="row">
+            <div class="input-group col-md-5 col-sm-12">
+                <div class="input-group-append">
+                    <span class="input-group-text bg-white border-right-none" style="border-top-left-radius: 6px; border-bottom-left-radius: 6px;">Quoi</span>
+                </div>
+                <input type="text" class="form-control border-right-none border-left-none" placeholder="Métier, mots-clés ou entreprise">
+                <div class="input-group-append">
+                  <span class="input-group-text bg-white " ><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+            </div>  
+
+            <div class="input-group col-md-5 col-sm-12">
+                <div class="input-group-append">
+                    <span class="input-group-text bg-white border-right-none" style="border-top-left-radius: 6px; border-bottom-left-radius: 6px;">Où</span>
+                </div>
+                <input type="text" class="form-control border-right-none border-left-none" style="border-left: none; border-right: none;" placeholder="Ville ou code postal">
+                <div class="input-group-append">
+                  <span class="input-group-text bg-white"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                </div>
+            </div>  
+
+            <div class=" input-group col-md-2 col-sm-12">
+                <button type="submit" class="btn btn-primary w-100">Rechercher</button>
+            </div>
+
+        </div>
+           
+    </form>
+    <br>
+    <div class="d-flex justify-content-center">
+        <p><a href=""><u>Publier votre CV</u></a>-Il suffit de quelques clics</p>
+    </div>
+</div>
+    <div class="container-fluid d-flex justify-content-center toggle">
+        <div class="toggle-element" (click)="setViewOffer(true)" [ngClass]="{'toggle-select' : viewOffer}">
+            <span>Offres d'emploi</span>
+        </div>
+        <div class="toggle-element" (click)="setViewOffer(false)" [ngClass]="{'toggle-select' : !viewOffer}">
+            <span>Recherches récentes</span>
+        </div>
+    </div>
+
+    <div class="container" [ngClass]="{'d-none':!viewOffer}">
+
+        <div class="row">
+            <div class="col-6">
+                <app-card-publication (click)="active(publication.id)"  *ngFor="let publication of publications | async" [publication]="publication" [isActive]="isActiveView(publication.id)"></app-card-publication>
+            </div>
+
+            <div class="col-6">
+                <app-view-offer [ngClass]="{ 'd-none' : !isActiveView(publication.id)}" *ngFor="let publication of publications | async" [publication]="publication"></app-view-offer>
+            </div>
+        </div>
+            
+    </div>
+
+    <div class="container" [ngClass]="{'d-none': viewOffer}">
+
+    </div>
+    
+    

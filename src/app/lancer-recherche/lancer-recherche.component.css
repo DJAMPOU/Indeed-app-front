@@ -1,0 +1,41 @@
+
+.border-right-none{
+    border-right: none;
+}
+
+.border-left-none{
+    border-left: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.input-group{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.form-control, .input-group-text {
+    border-color: gray;
+    border-radius: 6px;
+}
+
+.toggle{
+    border-bottom: 1px solid gray;
+}
+
+.toggle-element{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:large;
+    padding-bottom: 5px;
+    width: 300px;
+}
+
+.toggle-select{
+    font-weight: bold;
+    border-bottom: 2px solid blue;
+}
+
+.toggle-element:hover{
+    cursor: pointer;
+}

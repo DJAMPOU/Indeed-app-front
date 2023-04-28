@@ -1,0 +1,42 @@
+
+<div class="card" [ngClass]="{'isActive' : isActive}">
+    <div class="head d-flex">
+        <h5>{{publication.titre}}</h5>
+
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn bg-white" id="dropdownBasic1" ngbDropdownToggle>
+                <span class="sr-only">Toggle Dropdown</span>
+                <span class="fa fa-ellipsis-v"></span>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="fixed-top">
+              <button ngbDropdownItem><i class="fa fa-bookmark-o" aria-hidden="true"></i> Enregistrer l'offre</button>
+              <button ngbDropdownItem><i class="fa fa-ban" aria-hidden="true"></i> Pas intéressé.e</button>
+              <button ngbDropdownItem><i class="fa fa-flag" aria-hidden="true"></i> Signaler cette offre</button>
+            </div>
+        </div>
+    
+    </div>
+
+    <div>
+        <p>{{publication.entrepriseName}} {{publication.star}}<i class="fa fa-star" aria-hidden="true"></i></p>
+        <p>{{publication.emplacement}}</p>
+    </div>
+
+    <div class="d-flex">
+        <span *ngIf="publication.salaire" class="badge badge-info ml-1 mr-1"><i class="fa fa-money" aria-hidden="true"></i> {{publication.salaire}}</span>
+        <span *ngIf="publication.typeId.length>0" class="badge badge-info mr-1 ml-1"><i class="fa fa-briefcase" aria-hidden="true"></i> {{getNameType(publication.typeId[0])}} <span *ngIf="publication.typeId.length>1">+{{publication.typeId.length -1 }}</span></span>
+        <span *ngIf="publication.horaire_roulementId.length>0" class="badge badge-info ml-1 mr-1"><i class="fa fa-clock-o" aria-hidden="true"></i> {{getNameHr(publication.horaire_roulementId[0])}} <span *ngIf="publication.horaire_roulementId.length>1">+{{publication.horaire_roulementId.length -1 }}</span></span>
+    </div>
+
+    <div *ngIf="publication.manyOffer">
+        <i class="fa fa-user-plus" aria-hidden="true"></i> Plusieurs postes à pourvoir
+    </div>
+
+    <div class="description">
+        <p>
+            {{publication.description.slice(0, 150)}}
+            <span *ngIf="publication.description.length>150">...</span>
+        </p>
+    </div>
+
+</div>
