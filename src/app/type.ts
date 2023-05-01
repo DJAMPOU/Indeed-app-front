@@ -3,8 +3,10 @@ export class Type{
     name: string;
 
     constructor(
+        id : number = 1,
         name: string = 'Alternance'
     ){
+        this.id = id;
         this.name = name;
     }
 }

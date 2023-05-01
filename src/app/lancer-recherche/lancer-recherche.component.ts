@@ -10,7 +10,7 @@ import { HandleDbService } from '../handle-db.service';
 })
 export class LancerRechercheComponent implements OnInit{
 
-  publications : Observable<Publication[]>;
+  publications : Publication[];
   
   activeId: number = 1;
   viewOffer: boolean =true;

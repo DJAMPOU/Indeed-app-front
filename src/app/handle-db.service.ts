@@ -1,77 +1,117 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { Publication } from './publication';
 import { Type } from './type';
 import { Horaires_Roulements } from './horaires&roulements';
-import { Observable} from 'rxjs';
-import {find} from 'rxjs/operators';
+import { Observable, map} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HandleDbService {
-  publicationsRef : AngularFireList<Publication>;
-  typeRef: AngularFireList<Type>;
-  hrRef: AngularFireList<Horaires_Roulements>;
 
+  backHost = 'http://localhost:8000/';
   types : Type[];
   hrs : Horaires_Roulements[];
 
   constructor(
-    private db: AngularFireDatabase
+    private http : HttpClient
   ) {
-    this.publicationsRef = db.list('publications');
-    this.typeRef = db.list('types');
-    this.hrRef = db.list('horaires_roulements');
 
-    this.getAllTypes().pipe(
-    ).subscribe(types =>{
-      this.types = types;
-    });
-
-    this.getAllHrs().pipe(
-      ).subscribe(hrs =>{
-        this.hrs = hrs;
-      });
-  }
-
-  private restart(){
-    var type = new Type();
-    var hr = new Horaires_Roulements();
-    const dtype = [{'id':0, 'name': 'CDI'}, {'id':1, 'name': 'CDD'}, {'id':2, 'name': 'Alternance'}, {'id':3, 'name': 'Stage'}, {'id':4, 'name': 'Job Edudiant'}];
-    const dhr = [{'id':0, 'name': 'Repos le weekend'}, {'id':1, 'name': 'Temps plein'}, {'id':2, 'name': 'Temps partiel'}, {'id':3, 'name': 'Horaire Flexible'}, {'id':4, 'name': 'Horaire Variable'}, {'id':5, 'name': 'Horaire de jour'}, {'id':6, 'name': 'Horaire de soir'}, {'id':7, 'name': 'Horaire de nuit'}, {'id':8, 'name': 'Fin de semaine'}, {'id':9, 'name': 'Horaire en rotation'}, {'id':10, 'name': 'Temps partiel flexible'}, {'id':11, 'name': 'Temps partiel fixe'}, {'id':12, 'name': 'Horaire compressé'}, {'id':13, 'name': 'Horaire à la carte'}];
-
-    dtype.forEach(element => {
-      type.id = element.id;
-      type.name = element.name;
-      this.typeRef.push(type);
-    });
-
-    dhr.forEach(element => {
-      hr.id = element.id;
-      hr.name = element.name;
-      this.hrRef.push(hr);
-    });
     
+    //on recupere tout les horaires de roulement
+    this.getAllHrs()
+    .subscribe(hrs =>{
+        this.hrs = hrs.map(
+          data=> new Horaires_Roulements(data.id, data.name)
+        );
+      });
 
+    //on recupere tout les types  
+    this.getAllTypes()
+    .subscribe(
+      (datas) =>{
+        this.types = datas.map(
+          data=> new Type(data.id, data.name)
+        )
+      }
+    );
   }
 
-  getAllTypes() : Observable<Type[]>{
-    var types : Observable<Type[]>
-    types = this.typeRef.valueChanges();
-    return types;
+  getAllTypes() : Observable<any[]>{
+    const url = this.backHost + 'api/type/';
+    return this.http.get<any[]>(url)
   }
 
-  getAllHrs() : Observable<Horaires_Roulements[]>{
-    var hrs : Observable<Horaires_Roulements[]>
-    hrs = this.hrRef.valueChanges();
-    return hrs;
+  getAllHrs() : Observable<any[]>{
+    const url = this.backHost + 'api/hr/';
+    return this.http.get<any[]>(url)
   }
 
-  getAllPublications() : Observable<Publication[]>{
-    var publications : Observable<Publication[]>
-    publications = this.publicationsRef.valueChanges();
-    return publications;
+  getAllDetailPublication() : Observable<any[]>{
+    const url = this.backHost + 'api/publication/';
+    return this.http.get<any[]>(url);
+  }
+
+  getAllPubliType() : Observable<any[]>{
+    const url = this.backHost + 'api/publi_type/';
+    return this.http.get<any[]>(url);
+  }
+
+  getAllPubliHR() : Observable<any[]>{
+    const url = this.backHost + 'api/publi_hr/';
+    return this.http.get<any[]>(url);
+  }
+
+  getAllPublications() :Publication[]{
+    var publications : Publication[] = [];
+    var details : any[] = [];
+    var publiTypes : any[] = [];
+    var publiHR : any[] = [];
+
+    this.getAllDetailPublication()
+    .subscribe(
+      datas=>{
+        details = datas;
+        this.getAllPubliType()
+        .subscribe(
+          datas => {
+            publiTypes = datas;
+            this.getAllPubliHR()
+            .subscribe(
+              datas =>{
+                publiHR = datas;
+                
+                details.map(
+                  detail=>{
+                    publications.push(new Publication(detail.id, detail.titre, detail.entrepriseName, detail.mail, detail.emplacement, this.getTypeIds(detail.id, publiTypes), this.getHRIds(detail.id, publiHR), detail.description, detail.signaler, detail.star, detail.manyOffer, detail.haveHerSite, detail.salaire, detail.date))
+                  }
+                )
+              })
+          })
+    })
+
+    return publications
+  }
+
+  getTypeIds(publiId : number, publi_type : any[]) : number[]{
+    var result : number[] = [];
+    publi_type.map(
+      el=>{
+        el.id_publi.id == publiId?result.push(el.id_type.id):0
+      }
+    )
+    return result;
+  }
+
+  getHRIds(publiId : number, publi_hr : any[]) : number[]{
+    var result : number[] = [];
+    publi_hr.map(
+      el=>{
+        el.id_publi.id == publiId?result.push(el.id_hr.id):0
+      }
+    )
+    return result;
   }
 
   getNameType(id : Number):string | undefined{
@@ -82,9 +122,8 @@ export class HandleDbService {
     return (this.hrs.find( hr => hr.id == id))?.name
   }
 
-  addPublication(){
+  /*addPublication(){
     var newPublication;
     newPublication = new Publication();
-    this.publicationsRef.push(newPublication);
-  }
+  }*/
 }

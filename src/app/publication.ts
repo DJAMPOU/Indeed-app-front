@@ -16,6 +16,7 @@ export class Publication{
     date: Date;
 
     constructor(
+        id : number = 1,
         titre: string = "Développeur d'Application Javascript React en Alternance",
         entrepriseName: string = 'OpenClassrooms',
         mail: string = 'pierrewalter@gmail.com',
@@ -30,7 +31,7 @@ export class Publication{
         salaire:string = "1200 euro par mois",
         date: Date = new Date()
     ){
-        this.id = 1;
+        this.id = id;
         this.titre = titre;
         this.entrepriseName = entrepriseName;
         this.mail = mail;

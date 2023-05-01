@@ -4,8 +4,10 @@ export class Horaires_Roulements{
     name: string;
 
     constructor(
+        id : number = 1,
         name: string = 'Repos le weekend'
     ){
+        this.id = id;
         this.name = name;
     }
 }
