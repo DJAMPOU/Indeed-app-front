@@ -7,19 +7,61 @@
             <form #recruiteForm="ngForm">
 
                 <div class="form-group">
-                    <label for="name">Nom</label>
-                    <input type="text" class="form-control" id="name"
+                    <label for="entrepriseName"><h5>Le nom de votre entreprise *</h5></label>
+                    <input type="text" class="form-control" id="entrepriseName"
                             required
                             pattern="^[a-zA-Z0-9àéèç]{1,25}$"
-                           [(ngModel)]="recruiter.entrepriseName" name="name"
+                           [(ngModel)]="recruiter.entrepriseName" name="entrepriseName"
                            #name="ngModel">
             
                     <div [hidden]="name.valid || name.pristine"
                           class="card-panel red accent-1">
                           Le nom du pokémon est requis (1-25).
                     </div>
-                  </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="optionsNbrEmpl"><h5>Le nombre d'employés au sein de votre entreprise</h5></label>
+                    <select class="form-control" name="optionsNbrEmpl" id="optionsNbrEmpl" [(ngModel)]="IdNbrEmploye">
+                        <option *ngFor="let option of optionsNbrEmpl" [value]="option.id">{{option.name}}</option>
+                    </select>  
+                </div>
         
+                <div class="form-group">
+                    <label for="name"><h5>Votre nom et prénom *</h5></label>
+                    <input type="text" class="form-control" id="name"
+                            required
+                            pattern="^[a-zA-Z0-9àéèç]{1,25}$"
+                           [(ngModel)]="recruiter.nom" name="name"
+                           #name="ngModel">
+                </div>
+
+                <div class="form-group">
+                    <label for="optionsIsManager"><h5>Êtes-vous manager?</h5></label>
+                    <p>les candidats.es retenu.es travailleront dans votre chaîne hiérarchique.</p>
+                    
+                    <select class="form-control" name="optionsIsManager" id="optionsIsManager" [(ngModel)]="IdIsManager">
+                        <option *ngFor="let option of optionsIsManager" [value]="option.id">{{option.name}}</option>
+                    </select> 
+                </div>
+
+                <div class="form-group">
+                    <label for="optionsHowDiscover"><h5>Comment avez-vous entendu parler de nous?</h5></label>
+                    
+                    <select class="form-control" name="optionsHowDiscover" id="optionsHowDiscover" [(ngModel)]="IdHowDiscover">
+                        <option *ngFor="let option of optionsHowDiscover" [value]="option.id">{{option.name}}</option>
+                    </select> 
+                </div>
+
+                <div class="form-group">
+                    <label for="tel"><h5>Votre numéro de téléphone</h5></label>
+                    <p>Numéro réservé aux communications concernant la gestion du compte. Non visible pour les chercheurs d'emploi.</p>
+                    <input type="text" class="form-control" id="tel"
+                            required
+                            pattern="^[0-9+]{1,25}$"
+                           [(ngModel)]="recruiter.telNumber" name="tel"
+                           #name="ngModel">
+                </div>
 
             </form>
         </div>

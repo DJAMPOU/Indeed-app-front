@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ViewOfferComponent } from './view-offer/view-offer.component';
 import { EntrepriseComponent } from './entreprise/entreprise.component';
 import { RegisterRecruiterComponent } from './register-recruiter/register-recruiter.component';
+import { CreatePulicationComponent } from './create-pulication/create-pulication.component';
 
 
 const environment = {
@@ -40,6 +41,7 @@ const environment = {
     ViewOfferComponent,
     EntrepriseComponent,
     RegisterRecruiterComponent,
+    CreatePulicationComponent,
   ],
   imports: [
     FormsModule,

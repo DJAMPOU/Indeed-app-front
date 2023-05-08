@@ -2,7 +2,7 @@
 export class Employeur{
     id: number;
     entrepriseName: string;
-    employeNumber: string;
+    numbreEmployee: string;
     nom: string;
     isManager: boolean;
     howDiscover: string;
@@ -10,7 +10,7 @@ export class Employeur{
 
     constructor(
         entrepriseName: string = 'OpenClassrooms',
-        employeNumber: string = 'De 1 à 49',
+        numbreEmployee: string = 'De 1 à 49',
         nom: string = 'Stephen',
         isManager: boolean = true,
         howDiscover: string = 'vidéo en ligne',
@@ -18,7 +18,7 @@ export class Employeur{
     ){
         this.id = 1;
         this.entrepriseName =entrepriseName;
-        this.employeNumber = employeNumber;
+        this.numbreEmployee = numbreEmployee;
         this.nom = nom;
         this.isManager = isManager;
         this.howDiscover = howDiscover;
